@@ -1,16 +1,15 @@
 //
 //  AppDelegate.m
-//  Month array
+//  Дз
 //
-//  Created by Georg on 07.07.15.
-//  Copyright (c) 2015 Georg. All rights reserved.
+//  Created by George Fed on 20.07.15.
+//  Copyright (c) 2015 George Fed. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import "DetailViewController.h"
-#import "Month.h"
+#import "LerningClass.h"
 
-@interface AppDelegate () <UISplitViewControllerDelegate>
+@interface AppDelegate ()
 
 @end
 
@@ -19,40 +18,55 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-    navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
-    splitViewController.delegate = self;
-    Month* month1 = [[Month alloc] init];
-    Month* month2 = [[Month alloc] init];
-    Month* month3 = [[Month alloc] init];
-    Month* month4 = [[Month alloc] init];
-    Month* month5 = [[Month alloc] init];
-    Month* month6 = [[Month alloc] init];
-    Month* month7 = [[Month alloc] init];
-    Month* month8 = [[Month alloc] init];
-    Month* month9 = [[Month alloc] init];
-    Month* month10 = [[Month alloc] init];
-    Month* month11 = [[Month alloc] init];
-    Month* month12 = [[Month alloc] init];
     
-    month1.name = @"December";
-    month2.name = @"Januar";
-    month3.name = @"February";
-    month4.name = @"March";
-    month5.name = @"April";
-    month6.name = @"May";
-    month7.name = @"June";
-    month8.name = @"July";
-    month9.name = @"August";
-    month10.name = @"September";
-    month11.name = @"October";
-    month12.name = @"November";
+    LerningClass* pupil1 = [[LerningClass alloc] init];
+    LerningClass* pupil2 = [[LerningClass alloc] init];
+    LerningClass* pupil3 = [[LerningClass alloc] init];
+    LerningClass* pupil4 = [[LerningClass alloc] init];
+    LerningClass* pupil5 = [[LerningClass alloc] init];
+    LerningClass* pupil6 = [[LerningClass alloc] init];
+    LerningClass* pupil7 = [[LerningClass alloc] init];
     
-    NSArray* array = @[month1,month2,month3,month4,month5,month6,month7,month8,month9,month10,month11,month12];
+    pupil1.name = @"Peter";
+    pupil2.name = @"Alfred";
+    pupil3.name = @"Andrew";
+    pupil4.name = @"Harry";
+    pupil5.name = @"Edward";
+    pupil6.name = @"Ann";
+    pupil7.name = @"Mary";
     
-    for (int i = 0; i < 12; i++) {
-        NSLog(@"%@\n", [array[i] name]);
+    pupil1.gender = @"M";
+    pupil2.gender = @"M";
+    pupil3.gender = @"M";
+    pupil4.gender = @"M";
+    pupil5.gender = @"M";
+    pupil6.gender = @"F";
+    pupil7.gender = @"F";
+
+
+    NSArray* array = @[pupil1, pupil2, pupil3, pupil4, pupil5, pupil6, pupil7];
+    
+    for (LerningClass* object in array) {
+        object.mark = arc4random() % 30 + 21;
+        object.mark = object.mark / 10 + (int)object.mark % 10 / 10;
+    }
+    NSLog(@"%lu", (unsigned long)[array count]);
+    
+    float maxMark = 1;
+    for (LerningClass* obj in array) {
+        NSLog(@"%@, gender - %@, grade - %.1f", obj.name, obj.gender, obj.mark);
+        
+        if (obj.mark > maxMark) {
+            maxMark = obj.mark;
+        }
+        
+    }
+    NSLog(@"%.1f", maxMark);
+    
+    for (LerningClass* element in array) {
+        if (element.mark == maxMark) {
+            NSLog(@"%@", element.name);
+        }
     }
     return YES;
 }
@@ -77,17 +91,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-#pragma mark - Split view
-
-- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
-    if ([secondaryViewController isKindOfClass:[UINavigationController class]] && [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[DetailViewController class]] && ([(DetailViewController *)[(UINavigationController *)secondaryViewController topViewController] detailItem] == nil)) {
-        // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
-        return YES;
-    } else {
-        return NO;
-    }
 }
 
 @end
